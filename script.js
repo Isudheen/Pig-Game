@@ -32,32 +32,19 @@ btnRoll.addEventListener('click', () => {
   //3. Check for rolled stat: if true switch to next player
 
   if (scores[0] < 100 && scores[1] < 100) {
-    if (!activePlayer) {
-      if (dice !== 1) {
-        currentScore += dice;
-        current0El.textContent = currentScore;
-      } else {
-        scores[0] += currentScore;
-        score0El.textContent = scores[0];
-        currentScore = 0;
-        current0El.textContent = 0;
-        activePlayer = 1;
-        player0El.classList.toggle('player--active');
-        player1El.classList.toggle('player--active');
-      }
+    if (dice !== 1) {
+      currentScore += dice;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        currentScore;
     } else {
-      if (dice !== 1) {
-        currentScore += dice;
-        current1El.textContent = currentScore;
-      } else {
-        scores[1] += currentScore;
-        score1El.textContent = scores[1];
-        currentScore = 0;
-        current1El.textContent = 0;
-        activePlayer = 0;
-        player0El.classList.toggle('player--active');
-        player1El.classList.toggle('player--active');
-      }
+      scores[activePlayer] += currentScore;
+      document.getElementById(`score--${activePlayer}`).textContent =
+        scores[activePlayer];
+      currentScore = 0;
+      document.getElementById(`current--${activePlayer}`).textContent = 0;
+      activePlayer = activePlayer === 0 ? 1 : 0;
+      player0El.classList.toggle('player--active');
+      player1El.classList.toggle('player--active');
     }
   } else {
     if (score0El.textContent >= 100) {
